@@ -1,0 +1,11 @@
+{
+  "name": "skybuyfly",
+  "version": "1.0.0",
+  "description": "Compare duty-free prices for the same product across airport shops: search the catalogue, check prices live, see price history and look up barcodes.",
+  "mcpServers": {
+    "skybuyfly": {
+      "httpUrl": "https://skybuyfly.pitchai.net/mcp"
+    }
+  },
+  "contextFileName": "GEMINI.md"
+}

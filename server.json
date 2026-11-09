@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "net.pitchai.skybuyfly/skybuyfly",
+  "title": "SkyBuyFly",
+  "description": "Compare duty-free prices across airport shops: search, live price checks, history and barcodes.",
+  "version": "1.0.0",
+  "websiteUrl": "https://skybuyfly.pitchai.net/mcp/docs",
+  "icons": [
+    {
+      "src": "https://skybuyfly.pitchai.net/static/icons/icon-512.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"]
+    },
+    {
+      "src": "https://skybuyfly.pitchai.net/static/icons/icon-192.png",
+      "mimeType": "image/png",
+      "sizes": ["192x192"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://skybuyfly.pitchai.net/mcp"
+    }
+  ]
+}

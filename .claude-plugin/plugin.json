@@ -1,0 +1,26 @@
+{
+  "name": "skybuyfly",
+  "displayName": "SkyBuyFly",
+  "version": "1.0.0",
+  "description": "Compare duty-free prices for the same product across airport shops: search the catalogue, check prices live on the shops' pages, see price history and look up barcodes.",
+  "author": {
+    "name": "PitchAI",
+    "email": "info@pitchai.net",
+    "url": "https://skybuyfly.pitchai.net"
+  },
+  "homepage": "https://skybuyfly.pitchai.net/mcp/docs",
+  "repository": "https://github.com/Pitch-A-I/skybuyfly-mcp",
+  "license": "MIT",
+  "keywords": ["duty free", "airport shopping", "price comparison", "travel retail", "airports"],
+  "mcpServers": {
+    "skybuyfly": {
+      "type": "http",
+      "url": "https://skybuyfly.pitchai.net/mcp"
+    }
+  },
+  "icon": "./assets/icon-512.png",
+  "documentationUrl": "https://skybuyfly.pitchai.net/mcp/docs",
+  "supportUrl": "https://skybuyfly.pitchai.net/mcp/support",
+  "privacyPolicyUrl": "https://skybuyfly.pitchai.net/mcp/privacy",
+  "termsOfServiceUrl": "https://skybuyfly.pitchai.net/mcp/terms"
+}
