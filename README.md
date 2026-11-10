@@ -1,11 +1,14 @@
-# SkyBuyFly for AI assistants
+# SkyBuyFly MCP connector
 
 ![SkyBuyFly](assets/icon-192.png)
 
-SkyBuyFly compares duty-free prices for the same product across airport shops: about 258,000 products at
-87 airports, with prices collected from the airport shops' own websites (shops such as Heinemann, Avolta,
-Schiphol and Aelia). Connect SkyBuyFly to your AI assistant and ask what a product costs at the airports you fly
-through. SkyBuyFly can also confirm a price live on the airport shop's own page.
+SkyBuyFly compares duty-free prices for the same product across airport shops: hundreds of thousands of
+products at more than 80 airports, with prices collected from the airport shops' own websites (shops such as
+Heinemann, Avolta and Dubai Duty Free). This repository is the open source SkyBuyFly connector for AI assistants:
+a read-only [Model Context Protocol](https://modelcontextprotocol.io) server, its results widget and the client
+manifests (Claude plugin, Cursor plugin, Gemini CLI extension, MCP Registry entry). Connect it to your AI
+assistant and ask what a product costs at the airports you fly through; it can also confirm a price live on the
+airport shop's own page.
 
 **MCP server URL:** `https://skybuyfly.pitchai.net/mcp` (Streamable HTTP, no sign-in, read-only tools)
 
@@ -13,46 +16,55 @@ SkyBuyFly compares prices; it does not sell anything and cannot reserve, order o
 product and offer pages, which hand off to the airport shop's website. Tobacco and nicotine products are not
 included.
 
-This repository holds the client manifests and documentation for connecting AI assistants to SkyBuyFly. The MCP
-server itself is operated by PitchAI at the URL above; its source code is not part of this repository.
-
 Full documentation: https://skybuyfly.pitchai.net/mcp/docs
 
-## What this repository contains and does
+## How it works
 
-It contains no executable code. The manifests configure one remote MCP server,
-`https://skybuyfly.pitchai.net/mcp`, and one skill with instructions for using its tools. When your assistant
-calls a SkyBuyFly tool, it sends the tool's inputs (search text, product IDs, barcodes, airport codes, a
-currency) to that server, and the server answers with product information, prices and links to
-`skybuyfly.pitchai.net`. Nothing else is sent anywhere.
+The connector is a thin facade over the public SkyBuyFly JSON API (`https://skybuyfly.pitchai.net/api`). It holds
+no credentials, keeps no state and calls only public read routes; prices, the catalogue and live price checks are
+served by SkyBuyFly's own (private) backend behind that API. Each tool validates its inputs, calls the API, shapes
+the answer into product cards and offers with their freshness (live-confirmed or stored, with its date), removes
+tobacco and nicotine products, and links only to `skybuyfly.pitchai.net`. The server adds its own rate limits, a
+cap on concurrent live checks and a short response cache, so it stays inside the API's own limits.
 
-| File | Used by |
+When your assistant calls a SkyBuyFly tool, it sends the tool's inputs (search text, product IDs, barcodes, airport
+codes, a currency) to the server, and the server answers with product information, prices and links. Nothing else
+is sent anywhere.
+
+| Path | What it is |
 |---|---|
-| `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | Claude plugin and Claude Code marketplace (the MCP server is declared inline in `plugin.json`) |
-| `skills/skybuyfly/SKILL.md` | the skill for Claude and Cursor |
+| `src/skybuyfly_mcp/` | the MCP server (`mcp` SDK, `httpx`, `uvicorn`): tools, API client, shaping, tobacco screen, limits, widget, service pages |
+| `Dockerfile` | the server image (non-root, read-only root filesystem, health check) |
+| `.claude-plugin/`, `skills/skybuyfly/SKILL.md` | Claude plugin and Claude Code marketplace (the MCP server is declared inline in `plugin.json`) |
 | `.cursor-plugin/plugin.json`, `mcp.json` | Cursor plugin |
 | `gemini-extension.json`, `GEMINI.md` | Gemini CLI extension |
 | `server.json` | Official MCP Registry entry (`net.pitchai.skybuyfly/skybuyfly`) |
-| `glama.json` | Glama |
+| `.mcp.json`, `glama.json` | project-scope MCP configuration; Glama |
 | `assets/` | icons |
 
 ## Install
 
+The server needs no sign-in. Every option below connects to `https://skybuyfly.pitchai.net/mcp` directly; the
+plugin and extension installs in the Claude Code and Gemini CLI sections add the skill or context file of this
+repository as well.
+
 ### ChatGPT
 
 In ChatGPT on the web, open https://chatgpt.com/plugins, select the plus button and **Add custom MCP server**.
-Enter the name `SkyBuyFly`, put `https://skybuyfly.pitchai.net/mcp` under **Connection**, choose
-**No authentication**, confirm, and select **Create as a plugin**. Install it from your plugins and mention it
-with `@` in a chat. OpenAI's help centre lists custom MCP servers for ChatGPT Business and Enterprise/Edu on the
-web; on Business, an admin or owner adds them.
+Enter the name `SkyBuyFly` and, under **Connection**, the server URL `https://skybuyfly.pitchai.net/mcp`. Choose
+**No authentication**, review the risk warning and select **I understand and want to continue**, then select
+**Create as a plugin**. Install it from your plugins, then type `@` in the prompt box and select SkyBuyFly.
+OpenAI's help centre lists custom MCP servers on ChatGPT on the web for Business and Enterprise/Edu, and for Pro
+with read and fetch permissions. On Business, an admin or owner adds them.
 
 ### Claude (claude.ai, Claude Desktop)
 
-Go to **Customize > Connectors** (https://claude.ai/customize/connectors), select **Add custom connector**,
-enter the name `SkyBuyFly` and the URL `https://skybuyfly.pitchai.net/mcp`, choose **No sign-in**, and select
-**Add**. On the Free plan you can add one custom connector. On Team and Enterprise plans, an Owner adds it under
-**Organization settings > Connectors**, and members then select **Connect**. Turn it on in a chat with
-**+ > Connectors**.
+Go to **Customize > Connectors** (https://claude.ai/customize/connectors), select **+ Add** and then
+**Add custom connector**. Enter the name `SkyBuyFly` and the remote MCP server URL
+`https://skybuyfly.pitchai.net/mcp`, select **Continue**, choose **No sign in** and select **Add**. Turn it on in a
+chat with **+ > Connectors**. Custom connectors are available on every Claude plan; on the Free plan you can add
+one. On Team and Enterprise plans, an Owner adds it under **Organization settings > Connectors** (**Add**, then
+**Custom > Web**), and members then select **Connect** under **Customize > Connectors**.
 
 ### Claude Code
 
@@ -60,27 +72,26 @@ enter the name `SkyBuyFly` and the URL `https://skybuyfly.pitchai.net/mcp`, choo
 claude mcp add --transport http skybuyfly https://skybuyfly.pitchai.net/mcp
 ```
 
-Or install the plugin, which adds the server and the SkyBuyFly skill:
+This adds the server to the current project; add `--scope user` before the name to use it in all your projects.
+To add the server together with the SkyBuyFly skill, install the plugin from this repository:
 
-```text
-/plugin marketplace add Pitch-A-I/skybuyfly-mcp
-/plugin install skybuyfly@skybuyfly
+```bash
+claude plugin marketplace add Pitch-A-I/skybuyfly-mcp
+claude plugin install skybuyfly@skybuyfly
 ```
+
+or, inside Claude Code, `/plugin marketplace add Pitch-A-I/skybuyfly-mcp` and `/plugin install skybuyfly@skybuyfly`.
 
 ### VS Code
 
 [Install in VS Code](https://vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522skybuyfly%2522%252C%2522type%2522%253A%2522http%2522%252C%2522url%2522%253A%2522https%253A%252F%252Fskybuyfly.pitchai.net%252Fmcp%2522%257D)
-(opens VS Code, which shows the server for review before you install it), or run:
-
-```bash
-code --add-mcp '{"name":"skybuyfly","type":"http","url":"https://skybuyfly.pitchai.net/mcp"}'
-```
-
-or add it to `.vscode/mcp.json`:
+(opens VS Code, which shows the server for review before you install it), or run **MCP: Add Server** from the
+Command Palette, choose **HTTP** and enter the server URL. To use a configuration file, add this to
+`~/.copilot/mcp-config.json`:
 
 ```json
 {
-  "servers": {
+  "mcpServers": {
     "skybuyfly": {
       "type": "http",
       "url": "https://skybuyfly.pitchai.net/mcp"
@@ -98,7 +109,7 @@ browser's address bar (Cursor asks before it installs the server):
 cursor://anysphere.cursor-deeplink/mcp/install?name=SkyBuyFly&config=eyJ1cmwiOiJodHRwczovL3NreWJ1eWZseS5waXRjaGFpLm5ldC9tY3AifQ==
 ```
 
-or add it to `~/.cursor/mcp.json`:
+or add it to `~/.cursor/mcp.json` (all projects) or `.cursor/mcp.json` in a project:
 
 ```json
 {
@@ -113,13 +124,27 @@ or add it to `~/.cursor/mcp.json`:
 ### Gemini CLI
 
 ```bash
-gemini extensions install https://github.com/Pitch-A-I/skybuyfly-mcp
+gemini mcp add --scope user --transport http skybuyfly https://skybuyfly.pitchai.net/mcp
 ```
 
-or add only the server:
+Without `--scope user`, the server is added to the current project only. Or add this entry to
+`~/.gemini/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "skybuyfly": {
+      "type": "http",
+      "url": "https://skybuyfly.pitchai.net/mcp"
+    }
+  }
+}
+```
+
+To add the server together with the SkyBuyFly context file, install the extension from this repository:
 
 ```bash
-gemini mcp add --transport http skybuyfly https://skybuyfly.pitchai.net/mcp
+gemini extensions install https://github.com/Pitch-A-I/skybuyfly-mcp
 ```
 
 ### Windsurf (Devin Desktop)
@@ -186,9 +211,46 @@ All tools are read-only. Every tool that shows prices takes an optional `currenc
 ## Limits
 
 - A live check usually takes 5 to 15 seconds (the tool waits at most 20 seconds).
-- Up to 300 tool calls per minute per requesting address and 1,200 in total; live checks are limited to 20 new checks per
-  minute and 4 at a time across all users. When a limit is reached, the tool says how long to wait, and stored
-  prices stay available.
+- Up to 300 tool calls per minute per requesting address and 1,200 in total; live checks are limited to 20 new
+  checks per minute and 4 at a time across all users. When a limit is reached, the tool says how long to wait, and
+  stored prices stay available.
+
+## Run it yourself
+
+You need Python 3.12 and [uv](https://docs.astral.sh/uv/).
+
+```bash
+uv sync
+uv run python -m skybuyfly_mcp
+```
+
+The server listens on `0.0.0.0:8000` (set `PORT` to change it) and answers MCP at `http://localhost:8000/mcp`,
+its health at `/mcp/health` and its documentation pages at `/mcp/docs`. It calls the public SkyBuyFly API, so
+it needs no configuration; every setting is an environment variable with a default (`src/skybuyfly_mcp/config.py`):
+
+| Variable | Default | |
+|---|---|---|
+| `SKYBUYFLY_MCP_API_BASE_URL` | `https://skybuyfly.pitchai.net` | the SkyBuyFly API the tools call |
+| `SKYBUYFLY_MCP_PUBLIC_BASE_URL` | `https://skybuyfly.pitchai.net` | the site every link points to |
+| `SKYBUYFLY_MCP_CLIENT_CALLS_PER_MINUTE`, `SKYBUYFLY_MCP_GLOBAL_CALLS_PER_MINUTE` | 300, 1200 | tool calls per client address and in total |
+| `SKYBUYFLY_MCP_LIVE_MAX_CONCURRENT`, `SKYBUYFLY_MCP_LIVE_RUNS_PER_MINUTE`, `SKYBUYFLY_MCP_LIVE_COALESCE_SECONDS` | 4, 20, 60 | live checks at once, started per minute, and how long one result answers identical requests |
+
+The client address is read from `X-Real-IP`, so run the server behind a reverse proxy that sets that header. With
+Docker:
+
+```bash
+docker build -t skybuyfly-mcp .
+docker run --rm --read-only --tmpfs /tmp -p 127.0.0.1:8000:8000 skybuyfly-mcp
+```
+
+A server you run yourself is subject to the SkyBuyFly API's own limits for your address; for everyday use, connect
+to `https://skybuyfly.pitchai.net/mcp`.
+
+## Tests
+
+The connector's test suite (offline unit and end-to-end tests on recorded API answers, an integration suite
+against the live API, load tests and widget checks) is maintained in SkyBuyFly's private repository, together with
+the hosting setup. This repository mirrors the connector code of each release.
 
 ## Privacy, terms and support
 
@@ -196,9 +258,11 @@ All tools are read-only. Every tool that shows prices takes an optional `currenc
   (no account, no cookies, no analytics or tracking; the server receives only tool inputs, never your
   conversation)
 - Terms of use for SkyBuyFly in AI assistants: https://skybuyfly.pitchai.net/mcp/terms
-- Support: https://skybuyfly.pitchai.net/mcp/support (contact form https://skybuyfly.pitchai.net/contact, or info@pitchai.net)
+- Support: https://skybuyfly.pitchai.net/mcp/support (contact form https://skybuyfly.pitchai.net/contact, or
+  info@pitchai.net)
 
 ## License
 
-The manifests and documentation in this repository are licensed under the MIT License (see `LICENSE`).
-SkyBuyFly, its MCP server and its data are operated by PitchAI and are not covered by this license.
+The code, manifests and documentation in this repository are licensed under the MIT License (see `LICENSE`).
+SkyBuyFly's API, backend and data are operated by PitchAI and are not covered by this license; using them through
+this connector is subject to the terms of use above.

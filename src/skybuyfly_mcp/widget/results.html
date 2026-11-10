@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>SkyBuyFly price comparison</title>
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:var(--color-background-primary,light-dark(#fff,#15181c));
+  --panel:var(--color-background-secondary,light-dark(#f5f7f9,#1d2228));
+  --text:var(--color-text-primary,light-dark(#0f1c26,#eef2f6));
+  --muted:var(--color-text-secondary,light-dark(#4f5d68,#a5b0ba));
+  --line:var(--color-border-primary,light-dark(#e3e8ec,#2c333b));
+  --link:light-dark(#1b6392,#5cb6f2);
+  --btn:light-dark(#1667a8,#5cb6f2);
+  --btn-hover:light-dark(#11558b,#86c9f6);
+  --btn-text:light-dark(#fff,#08233a);
+  --ring:light-dark(#1898ea,#86c9f6);
+  --good:light-dark(#13692c,#6ddc8b);
+  --good-bg:light-dark(#e6f6ea,#1a2a20);
+  --cheap-bg:light-dark(#f1faf3,#18241c);
+  --warn:light-dark(#8a5a00,#f2c14e);
+  --warn-bg:light-dark(#fff6e0,#2a2414);
+  --chip:light-dark(#eef1f4,#262c33);
+  --tile:#fff;
+  --shadow:light-dark(0 1px 2px rgb(15 28 38/.06),0 1px 2px rgb(0 0 0/.4));
+  --font:var(--font-sans,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 var(--font);-webkit-font-smoothing:antialiased}
+.app{padding:16px 16px 12px;max-width:1120px;margin:0 auto}
+h1,h2,h3,p{margin:0}
+button{font:inherit;color:inherit}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--ring);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.num{font-variant-numeric:tabular-nums}
+.ico{width:16px;height:16px;flex:none;vertical-align:-3px}
+/* header */
+.hd{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.mark{width:22px;height:22px;flex:none;border-radius:6px}
+.wm{font-weight:650;letter-spacing:-.01em}
+.tag{color:var(--muted);font-size:12.5px}
+.pill{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+.h1{font-size:18px;line-height:1.3;font-weight:650;letter-spacing:-.01em;margin-bottom:4px}
+.lead{color:var(--muted);margin-bottom:14px}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 14px;border-radius:9px;border:0;background:var(--btn);color:var(--btn-text);font-weight:600;font-size:13.5px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--btn-hover)}
+.btn.ghost{background:transparent;color:var(--link);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--panel);text-decoration:none}
+.back{display:inline-flex;align-items:center;gap:4px;border:0;background:none;color:var(--link);font-weight:600;padding:4px 0;margin-bottom:10px;cursor:pointer}
+.acts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+/* product grid */
+.grid{list-style:none;margin:0;padding:0;display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+.card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;background:var(--bg);box-shadow:var(--shadow);overflow:hidden}
+.ph{position:relative;background:var(--tile);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card>.ph{height:164px;margin:8px 8px 0;border-radius:10px;border:1px solid var(--line)}
+.ph img{width:100%;height:100%;object-fit:contain;padding:14px}
+.ini{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:34px;letter-spacing:.04em;color:#fff;background:linear-gradient(160deg,#46c0ff,#0b3f73)}
+.cb{display:flex;flex-direction:column;gap:6px;padding:12px 14px 14px;flex:1;min-width:0}
+.brand{font-size:11.5px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);overflow-wrap:anywhere}
+.ttl{font-size:14.5px;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+/* two title lines (and the size line when a card of the grid has one), so prices line up across a grid row */
+.tt{min-height:40px}
+.sized .tt{min-height:60px}
+.tt .size{margin-top:3px}
+.size{color:var(--muted);font-size:12.5px;font-weight:550;overflow-wrap:anywhere}
+.price{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-top:2px}
+.price strong{font-size:21px;font-weight:700;letter-spacing:-.02em}
+.price .none{font-size:14px;font-weight:600;color:var(--muted)}
+.scope{display:inline-flex;align-items:center;gap:3px;color:var(--muted);font-size:12.5px}
+.scope .ico{width:13px;height:13px;vertical-align:0}
+.from{color:var(--muted);font-size:12.5px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{display:inline-flex;gap:5px;align-items:baseline;background:var(--chip);border-radius:7px;padding:2px 7px;font-size:12px}
+.chip b{font-weight:700;letter-spacing:.03em}
+.meta{display:flex;align-items:center;flex-wrap:wrap;gap:5px;color:var(--muted);font-size:12.5px}
+.cb .acts{margin-top:auto;padding-top:6px;flex-direction:column;align-items:stretch;gap:4px}
+.cb .acts a{font-size:13px;font-weight:600;text-align:center;padding:4px 0;white-space:nowrap}
+/* live + product */
+.ph-sm{width:64px;height:64px;flex:none;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.ph-lg{width:112px;height:112px}
+.ph-sm img{padding:7%}
+.ph-sm .ini{font-size:20px}
+.ph-lg .ini{font-size:30px}
+.phd{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+.phd>div:last-child{min-width:0}
+.phd .ttl{font-size:17px;-webkit-line-clamp:3}
+.phd .size{margin-top:2px}
+.status{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:12px;background:var(--panel);margin-bottom:10px}
+.status.ok{background:var(--good-bg)}
+.status.ok .ico{color:var(--good)}
+.status.warn{background:var(--warn-bg)}
+.status.warn .ico{color:var(--warn)}
+.status p{font-weight:550}
+.status small{display:block;color:var(--muted);font-size:12.5px;font-weight:400;margin-top:1px}
+.sum{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.sum .chip{font-size:12.5px;padding:3px 9px}
+.offers{list-style:none;margin:0 0 14px;padding:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.offer{display:grid;grid-template-columns:48px minmax(0,1fr) 150px 150px 80px;gap:12px;align-items:center;padding:11px 14px;border-top:1px solid var(--line)}
+.offer:first-child{border-top:0}
+.offer.best{background:var(--cheap-bg);box-shadow:inset 3px 0 0 var(--good)}
+.code{width:48px;height:40px;border-radius:9px;background:var(--chip);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;letter-spacing:.04em}
+.an{font-weight:600;line-height:1.3;overflow-wrap:anywhere}
+.sub{color:var(--muted);font-size:12.5px;margin-top:2px}
+.shopname{display:inline-block;max-width:100%;overflow-wrap:anywhere}
+.st{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;letter-spacing:.03em;border-radius:6px;padding:2px 7px;background:var(--chip);color:var(--muted)}
+.badge.live{background:var(--good-bg);color:var(--good)}
+.badge .ico{width:12px;height:12px;vertical-align:0}
+.when{font-size:12px;color:var(--muted);white-space:nowrap}
+.pr{text-align:right}
+.pr strong{display:block;font-size:16px;font-weight:700}
+.pr .none{display:block;font-size:13px;font-weight:600;color:var(--muted)}
+.shop{display:block;color:var(--muted);font-size:12px}
+.low{display:inline-block;margin-left:6px;font-size:10.5px;font-weight:700;color:var(--good);background:var(--good-bg);border:1px solid currentColor;border-radius:5px;padding:0 5px;letter-spacing:.04em;text-transform:uppercase;vertical-align:1px}
+.go{justify-self:end;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:3px}
+.sec{font-size:15px;font-weight:650;margin:18px 0 10px}
+.desc{color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin:0 0 14px}
+.desc.open{display:block}
+.more{border:0;background:none;color:var(--link);font-weight:600;padding:2px 0;cursor:pointer;margin:-10px 0 12px}
+.sim{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.sim a{display:flex;gap:10px;align-items:center;padding:8px;border:1px solid var(--line);border-radius:12px;color:var(--text)}
+.sim a>div:last-child{min-width:0}
+.sim a:hover{background:var(--panel);text-decoration:none}
+.sim .ph-sm{width:52px;height:52px;border-radius:9px}
+.sim .ttl{font-size:13px}
+.sim .from{font-size:12.5px}
+/* history */
+.hist{list-style:none;margin:0;padding:0;display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.hc{border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.hh{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.hh .an{flex:1;min-width:0;overflow-wrap:anywhere}
+.hh .an .sub{display:block;font-weight:400;margin-top:1px}
+.hh strong{font-size:17px}
+.spark{display:block;width:100%;height:76px;overflow:visible}
+.spark .ln{fill:none;stroke:var(--ring);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.spark path{stroke-linecap:round;fill:none}
+.spark .pt{stroke:var(--ring);stroke-width:5}
+.spark .ring{stroke:var(--bg);stroke-width:13}
+.spark .lo{stroke:var(--good);stroke-width:9}
+.spark .la{stroke:var(--btn);stroke-width:9}
+.spark .ax{stroke:var(--line);stroke-width:1}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;margin-top:4px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:1px}
+.span{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11.5px}
+details{margin-top:6px;font-size:12.5px;color:var(--muted)}
+summary{cursor:pointer;color:var(--link);font-weight:600}
+table{border-collapse:collapse;margin-top:4px;width:100%}
+td,th{padding:3px 0;text-align:left;font-weight:400}
+td:last-child{text-align:right}
+/* states */
+.empty{text-align:center;padding:36px 16px;border:1px dashed var(--line);border-radius:14px}
+.empty .lead{margin:0 auto;max-width:44ch}
+.empty .acts{justify-content:center;margin-top:14px}
+.notice{display:flex;gap:8px;align-items:flex-start;color:var(--muted);font-size:13px;margin:-6px 0 14px}
+.notice .ico{margin-top:1px}
+.empty .h1{margin:10px 0 4px}
+.empty .mark{width:40px;height:40px;border-radius:10px}
+.empty>.ico{width:28px;height:28px;color:var(--muted)}
+.acts+.empty{margin-top:16px}
+.cats{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 14px}
+.sk{background:linear-gradient(90deg,var(--panel),var(--chip),var(--panel));background-size:200% 100%;animation:sh 1.4s infinite linear;border-radius:8px}
+@keyframes sh{to{background-position:-200% 0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin .9s linear infinite}
+@media (prefers-reduced-motion:reduce){.sk,.spin{animation:none}}
+.toast{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:7px 12px;border-radius:9px;font-size:13px}
+.toast:empty{display:none}
+.ft{display:flex;align-items:center;gap:7px;margin-top:16px;padding-top:11px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+.ft .mark{width:16px;height:16px;border-radius:4px}
+@media (max-width:560px){
+  .app{padding:12px 12px 10px}
+  .tag{display:none}
+  .grid{grid-template-columns:1fr;gap:10px}
+  .card{flex-direction:row}
+  .card>.ph{width:96px;height:96px;flex:none;margin:12px 0 12px 12px}
+  .card>.ph .ini{font-size:26px}
+  .cb .acts{flex-direction:row;flex-wrap:wrap;align-items:center;gap:4px 12px}
+  .cb{padding:11px 12px 12px;gap:5px}
+  .tt,.sized .tt{min-height:0}
+  .price strong{font-size:18px}
+  .offer{grid-template-columns:44px minmax(0,1fr) auto;grid-template-areas:"c w p" "c s g";gap:4px 10px;padding:11px 12px}
+  .offer>.code{grid-area:c;width:44px;align-self:start}
+  .offer>.wh{grid-area:w}.offer>.st{grid-area:s;flex-direction:row;align-items:center;gap:6px}
+  .offer>.pr{grid-area:p}.offer>.go{grid-area:g}
+  .ph-lg{width:88px;height:88px}
+  .hist{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46C0FF"/><stop offset="1" stop-color="#0B3F73"/></linearGradient><linearGradient id="g2" gradientUnits="userSpaceOnUse" x1="248" y1="279" x2="576" y2="461"><stop offset="0" stop-color="#FFA864"/><stop offset="1" stop-color="#F0611A"/></linearGradient><linearGradient id="g3" gradientUnits="userSpaceOnUse" x1="741" y1="772" x2="559" y2="444"><stop offset="0" stop-color="#6AF4B2"/><stop offset="1" stop-color="#12B562"/></linearGradient><linearGradient id="g4" gradientUnits="userSpaceOnUse" x1="755" y1="265" x2="312" y2="708"><stop offset="0" stop-color="#FFF"/><stop offset="1" stop-color="#E2EFFC"/></linearGradient></defs><symbol id="logo" viewBox="0 0 1024 1024"><rect width="1024" height="1024" rx="229" fill="url(#g1)"/><path d="M276.8 271.3l85.2-24.5a18.5 18.5 0 0 1 14.1 1.6L603 374.2a18.5 18.5 0 0 1 7.2 25.1l-68.4 123.4a18.5 18.5 0 0 1-25.1 7.2L289.8 404.2a18.5 18.5 0 0 1-8.8-11.1l-24.5-85.3a29.6 29.6 0 0 1 20.3-36.5zm14.5 42.7a19.3 19.3 0 1 0 38.6 0 19.3 19.3 0 1 0-38.6 0z" fill="url(#g2)" fill-rule="evenodd"/><path d="M712.2 763.5l-85.3-24.4a18.5 18.5 0 0 1-11.1-8.8L490 503.3a18.5 18.5 0 0 1 7.2-25.1l123.4-68.4a18.5 18.5 0 0 1 25.1 7.2l125.8 226.9a18.5 18.5 0 0 1 1.6 14.1l-24.4 85.2a29.6 29.6 0 0 1-36.6 20.3zm-25.5-54.1a19.3 19.3 0 1 0 38.6 0 19.3 19.3 0 1 0-38.6 0z" fill="url(#g3)" fill-rule="evenodd"/><path d="M602.3 344.1a52.1 164.6 45 0 1 73.6 73.7L465.4 628.2a15.1 15.1 0 0 0-4.2 8.1l-19.9 112.8a11.8 11.8 0 0 1-3.2 6.3l-11.4 11.3a10.1 10.1 0 0 1-16.1-2.5l-34.8-67.7a8.4 8.4 0 0 0-11.6-3.5l-36.8 21a8.4 8.4 0 0 1-10.1-1.4l-9.9-9.9a8.4 8.4 0 0 1-1.4-10.1l21-36.8a8.4 8.4 0 0 0-3.5-11.6l-67.7-34.8a10.1 10.1 0 0 1-2.5-16.1l11.3-11.4a11.8 11.8 0 0 1 6.3-3.2l112.8-19.9a15.1 15.1 0 0 0 8.1-4.2z" fill="url(#g4)" fill-rule="evenodd"/></symbol></svg>
+<div class="app">
+  <main id="view" aria-busy="true"></main>
+  <footer class="ft"><svg class="mark" aria-hidden="true"><use href="#logo"/></svg><span>Prices from airport shop websites via SkyBuyFly · SkyBuyFly compares, it does not sell</span></footer>
+</div>
+<p id="announce" class="sr" aria-live="polite"></p>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+"use strict";
+(() => {
+const PROTOCOL = "2026-01-26";
+const ALLOWED = ["https://skybuyfly.pitchai.net/", "https://assets.pitchai.net/"];
+const root = document.documentElement;
+const view = document.getElementById("view");
+const S = { ctx: {}, stack: [], key: null, args: null, timer: 0 };
+
+/* ---------- MCP Apps bridge: JSON-RPC 2.0 over postMessage to window.parent ---------- */
+let nextId = 1;
+const pending = new Map();
+const notifications = {};
+function post(message) { window.parent.postMessage(Object.assign({ jsonrpc: "2.0" }, message), "*"); }
+function request(method, params) {
+  const id = nextId++;
+  post({ id, method, params });
+  return new Promise((resolve, reject) => pending.set(id, { resolve, reject }));
+}
+function notify(method, params) { post({ method, params }); }
+const hostRequests = { ping: () => ({}), "ui/resource-teardown": () => ({}) };
+window.addEventListener("message", (event) => {
+  if (event.source !== window.parent) return;
+  const m = event.data;
+  if (!m || m.jsonrpc !== "2.0") return;
+  if (m.method === undefined) {
+    const waiter = pending.get(m.id);
+    if (!waiter) return;
+    pending.delete(m.id);
+    if (m.error) waiter.reject(new Error(m.error.message)); else waiter.resolve(m.result);
+  } else if (m.id !== undefined) {
+    const handler = hostRequests[m.method];
+    post(handler ? { id: m.id, result: handler(m.params) } : { id: m.id, error: { code: -32601, message: "Method not found" } });
+  } else if (notifications[m.method]) {
+    notifications[m.method](m.params || {});
+  }
+});
+
+/* ---------- host context: theme, styles, locale, container ---------- */
+function applyContext(ctx) {
+  const localeChanged = (ctx.locale && ctx.locale !== S.ctx.locale) || (ctx.timeZone && ctx.timeZone !== S.ctx.timeZone);
+  Object.assign(S.ctx, ctx);
+  if (ctx.theme) { root.dataset.theme = ctx.theme; root.style.colorScheme = ctx.theme; }
+  if (ctx.styles && ctx.styles.variables) {
+    for (const [name, value] of Object.entries(ctx.styles.variables)) if (value) root.style.setProperty(name, value);
+  }
+  if (ctx.styles && ctx.styles.css && ctx.styles.css.fonts) {
+    const style = document.getElementById("host-fonts") || document.head.appendChild(Object.assign(document.createElement("style"), { id: "host-fonts" }));
+    style.textContent = ctx.styles.css.fonts;
+  }
+  const dims = ctx.containerDimensions;
+  if (dims) {
+    if ("height" in dims) { root.style.height = "100vh"; root.style.overflowY = "auto"; }
+    else if (dims.maxHeight) { root.style.maxHeight = dims.maxHeight + "px"; root.style.overflowY = "auto"; }
+  }
+  if (localeChanged && S.stack.length) render();
+}
+notifications["ui/notifications/host-context-changed"] = applyContext;
+
+/* ---------- formatting ---------- */
+const BROWSER_LOCALE = new Intl.DateTimeFormat().resolvedOptions().locale;
+const locale = () => S.ctx.locale || BROWSER_LOCALE;
+const fmtCache = new Map();
+function nf(currency, display) {
+  const key = locale() + currency + display;
+  if (!fmtCache.has(key)) fmtCache.set(key, new Intl.NumberFormat(locale(), { style: "currency", currency, currencyDisplay: display }));
+  return fmtCache.get(key);
+}
+const money = (p) => nf(p.currency, "narrowSymbol").format(p.amount);
+const shopMoney = (p) => nf(p.currency, "code").format(p.amount);
+function day(iso) {
+  const d = new Date(iso);
+  const opts = { day: "numeric", month: "short", timeZone: S.ctx.timeZone };
+  if (d.getFullYear() !== new Date().getFullYear()) opts.year = "numeric";
+  return new Intl.DateTimeFormat(locale(), opts).format(d);
+}
+const clock = (iso) => new Intl.DateTimeFormat(locale(), { hour: "numeric", minute: "2-digit", timeZone: S.ctx.timeZone }).format(new Date(iso));
+function ago(iso) {
+  const s = (Date.now() - Date.parse(iso)) / 1000;
+  if (s < 90) return "just now";
+  if (s < 3600) return Math.round(s / 60) + " min ago";
+  if (s < 86400) return Math.round(s / 3600) + " h ago";
+  return day(iso);
+}
+const plural = (n, one, many) => n + " " + (n === 1 ? one : many);
+const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+function url(u) {
+  if (!ALLOWED.some((prefix) => u.startsWith(prefix))) throw new Error("Unexpected link outside SkyBuyFly: " + u);
+  return esc(u);
+}
+function initials(product) {
+  const words = (product.brand || product.title).trim().split(/\s+/);
+  return (words.length > 1 ? words[0][0] + words[1][0] : words[0].slice(0, 2)).toUpperCase();
+}
+/* The shop's own price is shown with its currency code when there is no rate to the requested currency. */
+const anyMoney = (p, currency) => (p.currency === currency ? money(p) : shopMoney(p));
+const onlineSub = (name) => (/online shop/i.test(name) ? "Serves multiple airports" : "Online shop · multiple airports");
+
+/* ---------- icons ---------- */
+const I = (d, cls) => `<svg class="ico ${cls || ""}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const ICON = {
+  bolt: I('<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>'),
+  ext: I('<path d="M7 17 17 7M8 7h9v9"/>'),
+  clock: I('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
+  check: I('<path d="m5 12 5 5 9-10"/>'),
+  back: I('<path d="m15 18-6-6 6-6"/>'),
+  alert: I('<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/>'),
+  info: I('<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>'),
+  spin: I('<path d="M21 12a9 9 0 1 1-6.2-8.6"/>', "spin"),
+  shop: I('<path d="M4 9h16l-1.5 11h-13zM8 9V7a4 4 0 0 1 8 0v2"/>'),
+};
+const logo = (cls) => `<svg class="${cls}" aria-hidden="true"><use href="#logo"/></svg>`;
+
+/* ---------- shared pieces ---------- */
+function photo(product, cls) {
+  const ini = esc(initials(product));
+  const inner = product.image_url
+    ? `<img src="${url(product.image_url)}" alt="" loading="lazy" decoding="async">`
+    : `<div class="ini" role="img" aria-label="No product photo">${ini}</div>`;
+  return `<div class="ph ${cls || ""}" data-initials="${ini}">${inner}</div>`;
+}
+const brandLine = (p) => (p.brand ? `<p class="brand">${esc(p.brand)}</p>` : "");
+const sizeLine = (p) => (p.size ? `<p class="size">${esc(p.size)}</p>` : "");
+/* "from" only when the card shows more than one distinct price. */
+function priceCount(p) {
+  return new Set([p.lowest_price, p.highest_price, ...p.airports.map((a) => a.price)].filter(Boolean).map((x) => x.amount)).size;
+}
+const scopeLabel = (p) => (p.lowest_price_scope === "online_shop" ? '<span class="scope">· online shop</span>' : "");
+function cardPrice(p) {
+  if (!p.lowest_price) return '<p class="price"><span class="none">No current shop price</span></p>';
+  return `<p class="price">${priceCount(p) > 1 ? '<span class="from">from</span>' : ""}<strong class="num">${money(p.lowest_price)}</strong>${scopeLabel(p)}</p>`;
+}
+function cardReach(p) {
+  const n = p.airports.length;
+  const parts = [];
+  if (p.offer_count !== null && p.offer_count !== undefined && p.offer_count > Math.max(n, 1)) parts.push(plural(p.offer_count, "offer", "offers"));
+  if (n) parts.push("at " + plural(n, "airport", "airports"));
+  return parts.length ? `<p class="meta">${parts.join(" · ")}</p>` : "";
+}
+const link = (href, label, cls, aria) => `<a class="${cls || ""}" href="${url(href)}" target="_blank" rel="noopener" data-link${aria ? ` aria-label="${esc(aria)}"` : ""}>${label}</a>`;
+function header(lead, currency) {
+  return `<div class="hd">${logo("mark")}<span class="wm">SkyBuyFly</span><span class="tag">· Airport duty-free price comparison</span>${currency ? `<span class="pill">${esc(currency)}</span>` : ""}</div>${lead || ""}`;
+}
+function backButton() {
+  if (S.stack.length < 2) return "";
+  const label = S.stack[S.stack.length - 2].view === "product" ? "Back to product" : "Back to results";
+  return `<button class="back" data-act="back">${ICON.back}${label}</button>`;
+}
+const liveButton = (index, label) => `<button class="btn" data-act="live" data-i="${index}">${ICON.bolt}${label}</button>`;
+
+const BADGE = {
+  live_confirmed: ["live", ICON.check + "LIVE", "confirmed"],
+  stored: ["", "Stored", "seen"],
+  live_check_failed: ["", "Check failed", "seen"],
+  live_timeout: ["", "Timed out", "seen"],
+  live_blocked: ["", "Shop blocked check", "seen"],
+};
+function offerRow(o, best) {
+  const [cls, label, verb] = BADGE[o.status];
+  const when = verb === "confirmed" && Date.now() - Date.parse(o.observed_at) < 120000 ? "confirmed now" : `${verb} ${ago(o.observed_at)}`;
+  const airport = o.scope === "airport";
+  const where = airport ? [o.city, o.country].filter(Boolean).join(", ") : onlineSub(o.retailer);
+  const shop = airport && o.retailer ? `<span class="shopname">${esc(o.retailer)}</span>` : "";
+  const avail = o.availability ? " · " + esc(o.availability.replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase())) : "";
+  return `<li class="offer${best ? " best" : ""}">
+    <div class="code">${airport ? esc(o.airport_code) : ICON.shop}</div>
+    <div class="wh"><p class="an">${esc(airport ? o.airport_name || o.airport_code : o.retailer)}${best ? '<span class="low">Lowest</span>' : ""}</p><p class="sub">${esc(where)}${where && shop ? " · " : ""}${shop}${avail}</p></div>
+    <div class="st"><span class="badge ${cls}">${label}</span><span class="when">${esc(when)}</span></div>
+    <div class="pr num">${offerPrice(o)}</div>
+    ${link(o.skybuyfly_url, "Details" + ICON.ext, "go", `${o.retailer}${o.airport_name ? " at " + o.airport_name : ""} on SkyBuyFly`)}
+  </li>`;
+}
+function offerPrice(o) {
+  if (o.display_price) {
+    const differs = o.price && o.price.currency !== o.display_price.currency;
+    return `<strong>${money(o.display_price)}</strong>${differs ? `<span class="shop">${esc(shopMoney(o.price))} at the shop</span>` : ""}`;
+  }
+  if (o.price) return `<strong>${esc(shopMoney(o.price))}</strong><span class="shop">in the shop’s currency</span>`;
+  return '<span class="none">No price</span>';
+}
+const amount = (o) => (o.display_price ? o.display_price.amount : Infinity);
+function offerList(offers, bestUrl) {
+  const sorted = offers.slice().sort((a, b) => amount(a) - amount(b));
+  return `<ul class="offers" aria-label="Prices per shop, lowest first">${sorted.map((o) => offerRow(o, o.skybuyfly_url === bestUrl)).join("")}</ul>`;
+}
+function productHead(p, large, extra) {
+  return `<div class="phd">${photo(p, "ph-sm" + (large ? " ph-lg" : ""))}<div>${brandLine(p)}<h1 class="ttl">${esc(p.title)}</h1>${extra === undefined ? sizeLine(p) : extra}</div></div>`;
+}
+
+/* ---------- views ---------- */
+function card(p, i) {
+  const top = p.airports.slice(0, 3).map((a) => `<span class="chip" title="${esc(a.name)}"><b>${esc(a.code)}</b><span class="num">${money(a.price)}</span></span>`).join("");
+  return `<li class="card">${photo(p)}<div class="cb">
+    ${brandLine(p)}
+    <div class="tt"><h3 class="ttl">${esc(p.title)}</h3>${sizeLine(p)}</div>
+    ${cardPrice(p)}
+    ${cardReach(p)}
+    ${top ? `<div class="chips">${top}</div>` : ""}
+    ${p.price_observed_at ? `<p class="meta">${ICON.clock}updated ${esc(ago(p.price_observed_at))}</p>` : ""}
+    <div class="acts">${liveButton(i, "Check live prices")}${link(p.skybuyfly_url, "View on SkyBuyFly" + ICON.ext, "", `${p.title} on SkyBuyFly`)}</div>
+  </div></li>`;
+}
+function productList(d) {
+  const n = d.products.length;
+  let title;
+  if (d.query !== undefined) title = n ? `${plural(n, "product", "products")} for “${esc(d.query)}”` : "";
+  else if (d.code !== undefined) title = n ? `Barcode ${esc(d.code)}` : "";
+  else title = "Featured at SkyBuyFly";
+  if (!n) {
+    const what = d.query !== undefined ? `for “${esc(d.query)}”` : d.code !== undefined ? `with barcode ${esc(d.code)}` : "to feature right now";
+    const hint = d.notice || (d.query !== undefined ? "Try a brand name, a shorter product name or a different spelling." : d.code !== undefined ? "Check the digits, or search by the product’s name." : "");
+    return header("", d.currency) + `<div class="empty">${logo("mark")}<h1 class="h1">No products found at SkyBuyFly ${what}</h1>${hint ? `<p class="lead">${esc(hint)}</p>` : ""}</div>`;
+  }
+  const notice = d.notice ? `<p class="notice">${ICON.info}<span>${esc(d.notice)}</span></p>` : "";
+  const cats = d.popular_categories ? `<div class="cats" aria-label="Popular categories"><span class="meta">Popular:</span>${d.popular_categories.slice(0, 8).map((c) => `<span class="chip">${esc(c.name)} <span class="num">${c.count.toLocaleString(locale())}</span></span>`).join("")}</div>` : "";
+  return header(`<h1 class="h1">${title}</h1><p class="lead">Lowest price per product across airport duty-free shops.</p>`, d.currency) + notice + cats +
+    `<ul class="grid${d.products.some((p) => p.size) ? " sized" : ""}">${d.products.map(card).join("")}</ul>`;
+}
+const LIVE_TEXT = {
+  complete: (d) => ["ok", ICON.check, d.summary.checked === 1 ? "The shop price was checked live on the shop’s website." : `All ${d.summary.checked} shop prices were checked live on the shops’ websites.`],
+  partial: (d) => ["", ICON.info, `${d.summary.live_confirmed} of ${d.summary.checked} shop prices were confirmed live; the others show their last stored price.`],
+  rate_limited: () => ["warn", ICON.alert, "Live checking is busy right now. Please try again in a minute."],
+  unavailable: () => ["warn", ICON.alert, "Live checking is unavailable right now, so no prices could be confirmed."],
+  no_offers: () => ["", ICON.info, "SkyBuyFly has no airport shop listing for this product yet and has started looking for one."],
+};
+function liveOffers(d) {
+  const [cls, icon, text] = LIVE_TEXT[d.live_status](d);
+  const s = d.summary;
+  const chips = s.checked ? `<div class="sum"><span class="chip">${plural(s.checked, "shop", "shops")} checked</span><span class="chip">${s.live_confirmed} live-confirmed</span><span class="chip">${s.failed} failed</span>${s.stored_only ? `<span class="chip">${s.stored_only} stored only</span>` : ""}</div>` : "";
+  const checked = s.checked > 0;
+  return header("", d.currency) + backButton() + productHead(d.product, false, checked ? `<p class="meta">${ICON.bolt}Live check at ${esc(clock(d.checked_at))}</p>` : "") +
+    `<div class="status ${cls}">${icon}<p>${text}${checked ? `<small>Checked ${esc(ago(d.checked_at))}</small>` : ""}</p></div>` + chips +
+    (d.offers.length ? offerList(d.offers, d.cheapest && d.cheapest.skybuyfly_url) : "") +
+    `<div class="acts">${liveButton("top", checked ? "Check again" : "Try again")}${link(d.product.skybuyfly_url, "View on SkyBuyFly" + ICON.ext, "btn ghost", `${d.product.title} on SkyBuyFly`)}</div>`;
+}
+function livePending(d) {
+  const n = d.product.offer_count;
+  const checking = n ? `Checking ${plural(n, "airport shop", "airport shops")}…` : "Checking the airport shops…";
+  const body = d.error
+    ? `<div class="status warn">${ICON.alert}<p>The live check didn’t complete.<small>${esc(d.error)}</small></p></div><div class="acts">${liveButton("top", "Try again")}</div>`
+    : `<div class="status">${ICON.spin}<p>${checking}<small aria-hidden="true"><span data-elapsed>0</span> s · prices are read from the shops’ own websites</small></p></div>` +
+      `<ul class="offers" aria-hidden="true">${Array.from({ length: n ? Math.min(n, 6) : 3 }, () => '<li class="offer"><div class="code sk"></div><div class="wh"><div class="sk" style="height:12px;width:70%"></div><div class="sk" style="height:10px;width:45%;margin-top:6px"></div></div><div></div><div class="sk" style="height:16px;width:80px;justify-self:end"></div><div></div></li>').join("")}</ul>`;
+  return header("", d.currency) + backButton() + productHead(d.product, false) + body;
+}
+function productView(d) {
+  const p = d.product;
+  /* One currency in the headline: the requested one when any offer has it, otherwise the shops' own when they share one. */
+  const converted = d.offers.filter((o) => o.display_price).map((o) => [o, o.display_price]);
+  const own = d.offers.filter((o) => o.price).map((o) => [o, o.price]);
+  const figures = converted.length ? converted : own.every(([, x]) => x.currency === own[0][1].currency) ? own : [];
+  const lowest = figures.reduce((a, b) => (b[1].amount < a[1].amount ? b : a), figures[0]);
+  const high = figures.reduce((a, b) => (b[1].amount > a[1].amount ? b : a), figures[0]);
+  const range = lowest && high[1].amount > lowest[1].amount ? ` – ${anyMoney(high[1], d.currency)}` : "";
+  const facts = [p.size, p.category].filter(Boolean).map(esc).join(" · ");
+  const n = d.offers.length;
+  const headline = !n ? "" : `<p class="price">${lowest ? `<strong class="num">${anyMoney(lowest[1], d.currency)}${range}</strong>` : '<span class="none">No price</span>'}<span class="from">at ${plural(n, "shop", "shops")}</span></p>`;
+  const similar = d.similar.length ? `<h2 class="sec">Similar products</h2><ul class="sim">${d.similar.map((s) => `<li>${link(s.skybuyfly_url, `${photo(s, "ph-sm")}<div>${brandLine(s)}<p class="ttl">${esc(s.title)}</p>${s.size ? `<p class="from">${esc(s.size)}</p>` : ""}${s.lowest_price ? `<p class="from num">${priceCount(s) > 1 ? "from " : ""}${money(s.lowest_price)}${s.lowest_price_scope === "online_shop" ? " · online shop" : ""}</p>` : ""}</div>`, "", `${s.title} on SkyBuyFly`)}</li>`).join("")}</ul>` : "";
+  const prices = n
+    ? `<h2 class="sec">Stored prices at ${plural(n, "shop", "shops")}</h2>` + offerList(d.offers, lowest && lowest[0].skybuyfly_url)
+    : `<div class="empty">${ICON.info}<h2 class="h1">No current shop prices for this product</h2><p class="lead">SkyBuyFly has no airport or online shop price for it right now. A live check asks SkyBuyFly to look for one.</p></div>`;
+  return header("", d.currency) + backButton() + productHead(p, true, `${facts ? `<p class="meta">${facts}</p>` : ""}${headline}`) +
+    (p.description ? `<p class="desc" id="desc">${esc(p.description)}</p><button class="more" data-act="more" aria-controls="desc" aria-expanded="false" hidden>Show more</button>` : "") +
+    `<div class="acts">${liveButton("top", "Check live prices")}${link(p.skybuyfly_url, "View on SkyBuyFly" + ICON.ext, "btn ghost", `${p.title} on SkyBuyFly`)}</div>` +
+    prices + similar;
+}
+function spark(a, x0, x1, y0, y1) {
+  const W = 300, H = 64, P = 6;
+  const sx = (t) => (x1 === x0 ? W / 2 : P + ((t - x0) / (x1 - x0)) * (W - 2 * P));
+  const sy = (v) => (y1 === y0 ? H / 2 : P + (1 - (v - y0) / (y1 - y0)) * (H - 2 * P));
+  const pts = a.points.map((p) => [sx(Date.parse(p.date)), sy(p.price.amount), p]);
+  const line = pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+  const lowPt = pts.reduce((m, q) => (q[2].price.amount < m[2].price.amount ? q : m), pts[0]);
+  const last = pts[pts.length - 1];
+  const tip = (p) => `<title>${esc(day(p.date))} ${esc(clock(p.date))}: ${esc(money(p.price))}</title>`;
+  const dot = ([x, y, p], cls) => `<path class="${cls}" d="M${x.toFixed(1)} ${y.toFixed(1)}h0" vector-effect="non-scaling-stroke">${tip(p)}</path>`;
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+    <line class="ax" x1="0" x2="${W}" y1="${H - 0.5}" y2="${H - 0.5}" vector-effect="non-scaling-stroke"/>
+    ${pts.length > 1 ? `<polyline class="ln" points="${line}" vector-effect="non-scaling-stroke"/>` : ""}
+    ${pts.map((q) => dot(q, "pt")).join("")}${dot(lowPt, "ring")}${dot(lowPt, "lo")}${dot(last, "ring")}${dot(last, "la")}
+  </svg>`;
+}
+const DAY_MS = 86400000;
+/* The covered span, with times when it is shorter than two days (dates alone would all read the same). */
+function coverage(x0, x1, short) {
+  const a = new Date(x0).toISOString(), b = new Date(x1).toISOString();
+  if (!short) return x0 === x1 || day(a) === day(b) ? day(a) : `${day(a)} – ${day(b)}`;
+  if (x0 === x1) return `${day(a)}, ${clock(a)}`;
+  return day(a) === day(b) ? `${day(a)}, ${clock(a)} – ${clock(b)}` : `${day(a)}, ${clock(a)} – ${day(b)}, ${clock(b)}`;
+}
+function priceHistory(d) {
+  const all = d.airports.flatMap((a) => a.points);
+  const times = all.map((p) => Date.parse(p.date));
+  const values = all.map((p) => p.price.amount);
+  const x0 = Math.min(...times), x1 = Math.max(...times);
+  const short = x1 - x0 < 2 * DAY_MS;
+  const tick = (iso) => (short ? clock(iso) : day(iso));
+  const pad = (Math.max(...values) - Math.min(...values)) * 0.15;
+  const y0 = Math.min(...values) - pad, y1 = Math.max(...values) + pad;
+  const axis = x0 === x1
+    ? `<span>${esc(tick(new Date(x0).toISOString()))}</span>`
+    : `<span>${esc(tick(new Date(x0).toISOString()))}</span><span>${esc(tick(new Date(x1).toISOString()))}</span>`;
+  const items = d.airports.map((a) => {
+    const low = a.points.reduce((m, p) => (p.price.amount < m.price.amount ? p : m), a.points[0]);
+    const last = a.points[a.points.length - 1];
+    const place = a.code ? `${a.name} (${a.code})` : `${a.name} (${onlineSub(a.name).toLowerCase()})`;
+    const summary = `${place}: ${plural(a.points.length, "observation", "observations")} from ${coverage(Date.parse(a.points[0].date), Date.parse(last.date), short)}; lowest ${money(a.lowest)} on ${tick(low.date)}, latest ${money(a.latest)} on ${tick(last.date)}.`;
+    const name = a.code ? esc(a.name) : `<span class="shopname">${esc(a.name)}</span><span class="sub">${esc(onlineSub(a.name))}</span>`;
+    return `<li class="hc"><div class="hh"><div class="code">${a.code ? esc(a.code) : ICON.shop}</div><p class="an">${name}</p><strong class="num">${money(a.latest)}</strong></div>
+      <p class="sr">${esc(summary)}</p>${spark(a, x0, x1, y0, y1)}
+      <div class="span" aria-hidden="true">${axis}</div>
+      <div class="legend" aria-hidden="true"><span><i class="dot" style="background:var(--good)"></i>Lowest <b class="num">${money(a.lowest)}</b> · ${esc(tick(low.date))}</span><span><i class="dot" style="background:var(--btn)"></i>Latest <b class="num">${money(a.latest)}</b> · ${esc(tick(last.date))}</span></div>
+      <details><summary>${plural(a.points.length, "observation", "observations")}</summary><table><tbody>${a.points.slice().reverse().map((p) => `<tr><th scope="row">${esc(day(p.date))} ${esc(clock(p.date))}</th><td class="num">${money(p.price)}</td></tr>`).join("")}</tbody></table></details></li>`;
+  }).join("");
+  const head = productHead(d, false, `${sizeLine(d)}<p class="meta">Price history · ${link(d.skybuyfly_url, "View on SkyBuyFly" + ICON.ext, "", `${d.title} on SkyBuyFly`)}</p>`);
+  if (!d.airports.length) return header("", d.currency) + head + `<div class="empty"><h1 class="h1">No price history recorded for this product yet</h1></div>`;
+  return header("", d.currency) + head + `<p class="lead">Recent prices observed at each shop (up to 50 observations), in ${esc(d.currency)}. All charts share one price scale and one time span, which covers ${esc(coverage(x0, x1, short))}.</p>` +
+    `<ul class="hist">${items}</ul>`;
+}
+function failure(text) {
+  return header() + backButton() + `<div class="status warn">${ICON.alert}<p>This SkyBuyFly result couldn’t be shown.<small>${esc(text)}</small></p></div>`;
+}
+function skeleton() {
+  const q = S.args && S.args.query ? `Searching SkyBuyFly for “${esc(S.args.query)}”…` : "Loading SkyBuyFly prices…";
+  return header(`<h1 class="h1">${q}</h1><p class="lead">&nbsp;</p>`) +
+    `<ul class="grid" aria-hidden="true">${'<li class="card"><div class="ph sk" style="border-radius:0"></div><div class="cb"><div class="sk" style="height:10px;width:40%"></div><div class="sk" style="height:14px;width:90%"></div><div class="sk" style="height:20px;width:50%"></div></div></li>'.repeat(3)}</ul>`;
+}
+const VIEWS = { product_list: productList, product: productView, live_offers: liveOffers, live_pending: livePending, price_history: priceHistory, failure: (d) => failure(d.message) };
+
+/* ---------- rendering ---------- */
+function render() {
+  clearInterval(S.timer);
+  const top = S.stack[S.stack.length - 1];
+  if (!VIEWS[top.view]) throw new Error(`This result has no SkyBuyFly view ("${top.view}").`);
+  view.innerHTML = VIEWS[top.view](top);
+  const status = view.querySelector(".status p");
+  document.getElementById("announce").textContent = status ? status.firstChild.textContent : "";
+  view.removeAttribute("aria-busy");
+  for (const img of view.querySelectorAll(".ph img")) {
+    img.addEventListener("error", () => {
+      const box = img.parentElement;
+      box.innerHTML = `<div class="ini" role="img" aria-label="No product photo">${esc(box.dataset.initials)}</div>`;
+    }, { once: true });
+  }
+  const desc = view.querySelector(".desc");
+  if (desc && desc.scrollHeight > desc.clientHeight + 1) view.querySelector(".more").hidden = false;
+  if (top.view === "live_pending" && !top.error) {
+    const out = view.querySelector("[data-elapsed]");
+    S.timer = setInterval(() => { out.textContent = Math.floor((Date.now() - top.started) / 1000); }, 1000);
+  }
+}
+function show(structured) {
+  const key = JSON.stringify(structured);
+  if (key === S.key) return;
+  S.key = key;
+  S.stack = [structured];
+  safeRender();
+}
+function safeRender() {
+  try { render(); } catch (error) {
+    S.stack[S.stack.length - 1] = { view: "failure", message: error.message };
+    render();
+    notify("notifications/message", { level: "error", logger: "skybuyfly-widget", data: error.message });
+  }
+}
+function showResult(result) {
+  if (result.isError || !result.structuredContent) {
+    const text = (result.content || []).filter((c) => c.type === "text").map((c) => c.text).join(" ");
+    S.key = null;
+    S.stack = [{ view: "failure", message: text || "The tool returned no SkyBuyFly data." }];
+    safeRender();
+  } else show(result.structuredContent);
+}
+
+/* ---------- actions ---------- */
+function productFor(index) {
+  const top = S.stack[S.stack.length - 1];
+  return index === "top" ? top.product : top.products[Number(index)];
+}
+function checkLive(product) {
+  const currency = S.stack[S.stack.length - 1].currency;
+  const entry = { view: "live_pending", product, currency, started: Date.now() };
+  const top = S.stack[S.stack.length - 1];
+  if (top.view === "live_pending" || top.view === "live_offers") S.stack.pop();
+  S.stack.push(entry);
+  safeRender();
+  const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("No answer after 60 seconds. Please try again.")), 60000));
+  Promise.race([request("tools/call", { name: "get_live_prices", arguments: { product_id: product.product_id, currency } }), timeout])
+    .then((result) => {
+      if (S.stack[S.stack.length - 1] !== entry) return;
+      if (result.isError || !result.structuredContent) {
+        entry.error = (result.content || []).filter((c) => c.type === "text").map((c) => c.text).join(" ") || "The live check returned no prices.";
+      } else S.stack[S.stack.length - 1] = result.structuredContent;
+      safeRender();
+    }, (error) => {
+      if (S.stack[S.stack.length - 1] !== entry) return;
+      entry.error = error.message;
+      safeRender();
+    });
+}
+function openLink(href) {
+  if (window.openai && typeof window.openai.openExternal === "function") { window.openai.openExternal({ href }); return; }
+  request("ui/open-link", { url: href }).catch((error) => toast("Couldn’t open the link: " + error.message));
+}
+let toastTimer = 0;
+function toast(text) {
+  const box = document.getElementById("toast");
+  box.textContent = text;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { box.textContent = ""; }, 4000);
+}
+view.addEventListener("click", (event) => {
+  const a = event.target.closest("a[data-link]");
+  if (a) { event.preventDefault(); openLink(a.href); return; }
+  const button = event.target.closest("button[data-act]");
+  if (!button) return;
+  const act = button.dataset.act;
+  if (act === "live") checkLive(productFor(button.dataset.i));
+  else if (act === "back") { S.stack.pop(); safeRender(); }
+  else if (act === "more") {
+    const open = view.querySelector(".desc").classList.toggle("open");
+    button.setAttribute("aria-expanded", String(open));
+    button.textContent = open ? "Show less" : "Show more";
+  }
+});
+
+/* ---------- size reporting ---------- */
+let sizeQueued = false, lastW = 0, lastH = 0;
+function reportSize() {
+  if (sizeQueued) return;
+  sizeQueued = true;
+  requestAnimationFrame(() => {
+    sizeQueued = false;
+    const previous = root.style.height;
+    root.style.height = "max-content";
+    const height = Math.ceil(root.getBoundingClientRect().height);
+    root.style.height = previous;
+    const width = Math.ceil(window.innerWidth);
+    if (width !== lastW || height !== lastH) {
+      lastW = width; lastH = height;
+      notify("ui/notifications/size-changed", { width, height });
+    }
+  });
+}
+
+/* ---------- lifecycle ---------- */
+notifications["ui/notifications/tool-input"] = (params) => {
+  S.args = params.arguments;
+  if (!S.stack.length) view.innerHTML = skeleton();
+};
+notifications["ui/notifications/tool-result"] = showResult;
+notifications["ui/notifications/tool-cancelled"] = (params) => {
+  if (!S.stack.length) { S.stack = [{ view: "failure", message: params.reason || "The request was cancelled." }]; safeRender(); }
+};
+view.innerHTML = skeleton();
+if (window.openai && window.openai.toolOutput) show(window.openai.toolOutput);
+request("ui/initialize", {
+  appInfo: { name: "SkyBuyFly", version: "1.0.0" },
+  appCapabilities: { availableDisplayModes: ["inline"] },
+  protocolVersion: PROTOCOL,
+}).then((result) => {
+  applyContext(result.hostContext || {});
+  notify("ui/notifications/initialized", {});
+  const observer = new ResizeObserver(reportSize);
+  observer.observe(root);
+  observer.observe(document.body);
+  reportSize();
+});
+})();
+</script>
+</body>
+</html>

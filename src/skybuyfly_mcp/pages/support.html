@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Support for SkyBuyFly in AI assistants | SkyBuyFly</title>
+<meta name="description" content="How to get help with the SkyBuyFly MCP server in ChatGPT, Claude and other AI assistants: contact form, email, service status and what to include in a report.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://skybuyfly.pitchai.net/mcp/support">
+<link rel="icon" href="/static/icons/icon-192.png" type="image/png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SkyBuyFly">
+<meta property="og:title" content="Support for SkyBuyFly in AI assistants">
+<meta property="og:description" content="Contact PitchAI about the SkyBuyFly MCP server: contact form, email and service status.">
+<meta property="og:url" content="https://skybuyfly.pitchai.net/mcp/support">
+<meta property="og:image" content="https://skybuyfly.pitchai.net/static/icons/icon-512.png">
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#fff;--panel:#f5f7f9;--text:#0f1419;--muted:#4f5d68;--line:#e3e8ec;--link:#1b6392;--ring:#1898ea;--accent:#1898ea;
+  --btn:#1667a8;--btn-hover:#11558b;--btn-text:#fff;--good:#13692c;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#15181c;--panel:#1d2228;--text:#eef2f6;--muted:#a5b0ba;--line:#2c333b;--link:#5cb6f2;--ring:#86c9f6;
+    --btn:#5cb6f2;--btn-hover:#86c9f6;--btn-text:#08233a;--good:#6ddc8b;}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+a{color:var(--link);text-underline-offset:2px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--ring);outline-offset:2px;border-radius:4px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--bg);padding:8px 12px}
+.skip:focus{left:12px;top:12px;z-index:1}
+header,main,footer{max-width:860px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;gap:12px;padding-top:28px;padding-bottom:8px}
+header svg{width:40px;height:40px;flex:none}
+.brand{font-weight:700;font-size:18px;letter-spacing:-.01em;color:var(--text);text-decoration:none}
+h1{margin:24px 0 12px;font-size:clamp(28px,5.5vw,40px);line-height:1.15;letter-spacing:-.02em}
+h2{margin:44px 0 10px;font-size:23px;line-height:1.3;letter-spacing:-.01em}
+h3{margin:22px 0 6px;font-size:17px;line-height:1.35}
+p,ul,ol{margin:0 0 14px}
+ul,ol{padding-left:22px}
+li{margin:4px 0}
+.lead{font-size:19px;color:var(--muted);max-width:44em}
+.meta{color:var(--muted);font-size:14px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+:not(pre)>code{white-space:nowrap}
+code.addr{display:block;width:fit-content;max-width:100%;margin:6px 0 14px;padding:6px 9px;font-size:clamp(12px,3.4vw,14.5px);white-space:normal;overflow-wrap:anywhere}
+pre{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;margin:0 0 14px}
+pre code{background:none;border:0;padding:0;font-size:clamp(12px,3.4vw,14px)}
+pre.cmd{white-space:pre-wrap}
+pre.cmd code{display:block;padding-left:2ch;text-indent:-2ch}
+pre.cmd .nw{white-space:nowrap}
+.connect{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin:24px 0}
+.connect .label{margin:0 0 8px;font-weight:600}
+.url{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.url code{font-size:clamp(13px,3.6vw,17px);padding:8px 12px;flex:1 1 280px;background:var(--bg);white-space:normal;overflow-wrap:anywhere}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 16px;border-radius:10px;border:0;background:var(--btn);color:var(--btn-text);font:inherit;font-weight:600;cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--btn-hover)}
+.btn.ghost{background:transparent;color:var(--link);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--panel)}
+.facts{display:flex;flex-wrap:wrap;gap:6px 16px;margin:10px 0 0;padding:0;list-style:none;color:var(--muted);font-size:14px}
+.status{margin:0;color:var(--good);font-size:14px}
+.status:not(:empty){margin-top:8px}
+.note{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 16px;margin:20px 0}
+.note p:last-child{margin-bottom:0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}
+details{border:1px solid var(--line);border-radius:12px;margin:10px 0;background:var(--bg)}
+summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style-position:inside}
+details[open] summary{border-bottom:1px solid var(--line)}
+details .body{padding:12px 16px 4px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:0 0 14px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{background:var(--panel);font-weight:600}
+tr:last-child td{border-bottom:0}
+caption{caption-side:bottom;text-align:left;padding:8px 12px}
+td code{white-space:nowrap}
+footer{margin-top:52px;padding-top:20px;padding-bottom:40px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:8px}
+@media (max-width:600px){
+  .connect{padding:14px}
+  summary{padding:12px 14px}
+  details .body{padding:12px 14px 4px}
+  pre{padding:10px 12px;white-space:pre-wrap}
+  .table-wrap{overflow:visible;border:0;border-radius:0}
+  table,tbody,tr,td,caption{display:block;min-width:0}
+  thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  caption{padding:0 0 8px}
+  tr{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 10px}
+  td,tr:last-child td{border:0;padding:0}
+  td+td{margin-top:6px}
+  td[data-label]::before{content:attr(data-label);display:block;color:var(--muted);font-size:13px;font-weight:600}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" aria-hidden="true" focusable="false"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46C0FF" stop-opacity="1"/><stop offset="1" stop-color="#0B3F73" stop-opacity="1"/></linearGradient><radialGradient id="glow" cx="0.28" cy="0.08" r="0.8"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.3"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient><linearGradient id="tag_dear_fill" gradientUnits="userSpaceOnUse" x1="248.34" y1="279.42" x2="576.01" y2="461.05"><stop offset="0" stop-color="#FFA864" stop-opacity="1"/><stop offset="1" stop-color="#F0611A" stop-opacity="1"/></linearGradient><linearGradient id="tag_cheap_fill" gradientUnits="userSpaceOnUse" x1="740.58" y1="771.66" x2="558.95" y2="443.99"><stop offset="0" stop-color="#6AF4B2" stop-opacity="1"/><stop offset="1" stop-color="#12B562" stop-opacity="1"/></linearGradient><linearGradient id="body_fill" gradientUnits="userSpaceOnUse" x1="755.49" y1="264.51" x2="312.39" y2="707.61"><stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/><stop offset="1" stop-color="#E2EFFC" stop-opacity="1"/></linearGradient><filter id="lift" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#021226" flood-opacity="0.4"/></filter><clipPath id="corners"><rect width="1024" height="1024" rx="229.07"/></clipPath></defs><g clip-path="url(#corners)"><rect width="1024" height="1024" fill="url(#sky)"/><rect width="1024" height="1024" fill="url(#glow)"/><g filter="url(#lift)"><path d="M276.76,271.27 L362.03,246.82 A18.48,18.48 0 0 1 376.08,248.42 L603.01,374.22 A18.48,18.48 0 0 1 610.22,399.34 L541.8,522.76 A18.48,18.48 0 0 1 516.68,529.97 L289.75,404.18 A18.48,18.48 0 0 1 280.94,393.11 L256.49,307.84 A29.57,29.57 0 0 1 276.76,271.27 Z M291.32,313.96 A19.32,19.32 0 1 0 329.96,313.96 A19.32,19.32 0 1 0 291.32,313.96 Z" fill="url(#tag_dear_fill)" fill-rule="evenodd"/><path d="M712.16,763.51 L626.89,739.06 A18.48,18.48 0 0 1 615.82,730.25 L490.03,503.32 A18.48,18.48 0 0 1 497.24,478.2 L620.66,409.78 A18.48,18.48 0 0 1 645.78,416.99 L771.58,643.92 A18.48,18.48 0 0 1 773.18,657.97 L748.73,743.24 A29.57,29.57 0 0 1 712.16,763.51 Z M686.72,709.36 A19.32,19.32 0 1 0 725.36,709.36 A19.32,19.32 0 1 0 686.72,709.36 Z" fill="url(#tag_cheap_fill)" fill-rule="evenodd"/><path d="M602.25,344.1 A52.08,164.64 45 0 1 675.9,417.75 L465.44,628.21 A15.12,15.12 0 0 0 461.24,636.28 L441.33,749.1 A11.76,11.76 0 0 1 438.07,755.37 L426.71,766.73 A10.08,10.08 0 0 1 410.61,764.21 L375.85,696.47 A8.4,8.4 0 0 0 364.22,693.01 L327.46,713.94 A8.4,8.4 0 0 1 317.36,712.58 L307.42,702.64 A8.4,8.4 0 0 1 306.06,692.54 L326.99,655.78 A8.4,8.4 0 0 0 323.53,644.15 L255.79,609.39 A10.08,10.08 0 0 1 253.27,593.29 L264.63,581.93 A11.76,11.76 0 0 1 270.9,578.67 L383.72,558.76 A15.12,15.12 0 0 0 391.79,554.56 L602.25,344.1 Z" fill="url(#body_fill)" fill-rule="evenodd"/></g></g></svg>
+<a class="brand" href="https://skybuyfly.pitchai.net/">SkyBuyFly</a>
+</header>
+<main id="content">
+<h1>Support for SkyBuyFly in AI assistants</h1>
+<p class="lead">Help with the SkyBuyFly MCP server in ChatGPT, Claude, Cursor, VS Code, Gemini CLI and other MCP clients. The server's address is:</p>
+<code class="addr">https://skybuyfly.pitchai.net/mcp</code>
+
+<section class="connect" aria-labelledby="contact-title">
+<p class="label" id="contact-title">Contact</p>
+<div class="actions">
+<a class="btn" href="https://skybuyfly.pitchai.net/contact">Contact form</a>
+<a class="btn ghost" href="mailto:info@pitchai.net">info@pitchai.net</a>
+</div>
+<p class="meta">SkyBuyFly and this server are operated by PitchAI.</p>
+</section>
+
+<h2>Is the service up?</h2>
+<p>The server's status is at:</p>
+<a href="https://skybuyfly.pitchai.net/mcp/health"><code class="addr">https://skybuyfly.pitchai.net/mcp/health</code></a>
+<p>It answers <code>"status": "ok"</code> while the server runs. How to connect each assistant is described on <a href="https://skybuyfly.pitchai.net/mcp/docs">SkyBuyFly for AI assistants</a>.</p>
+
+<h2>Common questions</h2>
+<ul>
+<li><strong>The connection fails.</strong> Use the server address above with the Streamable HTTP transport and no authentication.</li>
+<li><strong>"Too many requests" or "live checks are busy".</strong> The server limits tool calls and live price checks per minute. Wait the number of seconds the message names and try again; stored prices stay available through <code>get_product</code>.</li>
+<li><strong>A price differs from the shop.</strong> Stored prices carry the date they were observed and can be out of date. Ask for a live check, or open the offer's link to see the shop's current price. The shop's own price applies.</li>
+<li><strong>A product is missing.</strong> SkyBuyFly does not cover every airport, shop or product, and tobacco and nicotine products are not available.</li>
+</ul>
+
+<h2>What to include in a report</h2>
+<ul>
+<li>The assistant or client you used (for example ChatGPT, Claude on the web, Claude Code or Cursor).</li>
+<li>The tool, if you know it, and what you asked: the product, barcode, airports and currency.</li>
+<li>The date and time of the request, with your time zone.</li>
+<li>The answer or error message you got, and what you expected instead.</li>
+</ul>
+<p>Please do not include personal details that are not needed to look into the problem.</p>
+
+<h2>Terms and privacy</h2>
+<ul>
+<li><a href="https://skybuyfly.pitchai.net/mcp/terms">Terms of use for SkyBuyFly in AI assistants</a></li>
+<li><a href="https://skybuyfly.pitchai.net/mcp/privacy">Privacy notice for SkyBuyFly in AI assistants</a></li>
+</ul>
+<p class="meta">Last updated 9 November 2026</p>
+</main>
+<footer>
+<nav aria-label="Related pages">
+<a href="https://skybuyfly.pitchai.net/mcp/docs">SkyBuyFly for AI assistants</a>
+<a href="https://skybuyfly.pitchai.net/mcp/privacy">Privacy notice</a>
+<a href="https://skybuyfly.pitchai.net/mcp/terms">Terms of use</a>
+<a href="https://skybuyfly.pitchai.net/mcp/support">Support</a>
+</nav>
+<p>SkyBuyFly is published by PitchAI.</p>
+</footer>
+</body>
+</html>

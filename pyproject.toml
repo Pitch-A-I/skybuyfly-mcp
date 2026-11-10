@@ -1,0 +1,61 @@
+[project]
+name = "skybuyfly-mcp"
+version = "1.0.0"
+description = "SkyBuyFly public MCP server: a read-only facade over the public SkyBuyFly price comparison API."
+requires-python = ">=3.12,<3.13"
+license = "MIT"
+authors = [{ name = "PitchAI" }]
+dependencies = [
+    "mcp==2.3.0",
+    "httpx==0.28.1",
+    "uvicorn==0.54.0",
+    "pydantic==2.14.3",
+    "anyio==4.16.0",
+    "starlette==1.10.0",
+]
+
+[project.scripts]
+skybuyfly-mcp = "skybuyfly_mcp.__main__:main"
+
+[dependency-groups]
+dev = [
+    "pytest==9.2.0",
+    "pytest-asyncio==1.4.1.post1",
+    "basedpyright==1.40.2",
+]
+
+[build-system]
+requires = ["hatchling==1.33.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/skybuyfly_mcp"]
+
+[tool.pytest.ini_options]
+testpaths = ["skybuyfly_mcp_tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+    "integration: runs against the real production API (set SKYBUYFLY_MCP_INTEGRATION=1)",
+    "slow: runs for minutes; each such test is opted into by its own environment variable",
+]
+addopts = "-ra"
+
+[tool.basedpyright]
+# Strict type checking against this project's own environment.
+include = ["src", "skybuyfly_mcp_tests"]
+pythonVersion = "3.12"
+typeCheckingMode = "strict"
+failOnWarnings = true
+venvPath = "."
+venv = ".venv"
+reportAny = "error"
+reportExplicitAny = "error"
+reportInvalidCast = "error"
+reportImplicitRelativeImport = "error"
+reportPrivateLocalImportUsage = "error"
+reportUnusedParameter = "error"
+reportImplicitAbstractClass = "error"
+reportInvalidAbstractMethod = "error"
+reportIncompatibleUnannotatedOverride = "error"
+reportUnannotatedClassAttribute = "error"

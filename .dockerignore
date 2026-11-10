@@ -1,0 +1,9 @@
+# Allowlist: the image is built from pyproject.toml, uv.lock and src/ only (see Dockerfile).
+# Tests, the widget harness, client manifests, documentation and local caches never enter it.
+*
+!pyproject.toml
+!uv.lock
+!src
+**/__pycache__
+**/*.pyc
+**/*.pyo

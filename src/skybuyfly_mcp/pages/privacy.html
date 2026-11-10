@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Privacy notice for SkyBuyFly in AI assistants | SkyBuyFly</title>
+<meta name="description" content="What the SkyBuyFly MCP server receives when ChatGPT, Claude or another AI assistant uses it, what it logs, who receives data and how long it is kept.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://skybuyfly.pitchai.net/mcp/privacy">
+<link rel="icon" href="/static/icons/icon-192.png" type="image/png">
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#fff;--panel:#f5f7f9;--text:#0f1419;--muted:#4f5d68;--line:#e3e8ec;--link:#1b6392;--ring:#1898ea;--accent:#1898ea;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#15181c;--panel:#1d2228;--text:#eef2f6;--muted:#a5b0ba;--line:#2c333b;--link:#5cb6f2;--ring:#86c9f6;}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+a{color:var(--link);text-underline-offset:2px}
+a:focus-visible{outline:3px solid var(--ring);outline-offset:2px;border-radius:4px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--bg);padding:8px 12px}
+.skip:focus{left:12px;top:12px;z-index:1}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;gap:12px;padding-top:28px;padding-bottom:8px}
+header svg{width:40px;height:40px;flex:none}
+.brand{font-weight:700;font-size:18px;letter-spacing:-.01em;color:var(--text);text-decoration:none}
+.eyebrow{margin:24px 0 4px;color:var(--muted);font-size:14px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+h1{margin:0 0 12px;font-size:clamp(26px,5vw,34px);line-height:1.2;letter-spacing:-.02em}
+h2{margin:36px 0 8px;font-size:21px;line-height:1.3;letter-spacing:-.01em}
+p,ul{margin:0 0 14px}
+ul{padding-left:22px}
+li{margin:4px 0}
+.lead{font-size:18px;color:var(--muted)}
+.meta{color:var(--muted);font-size:14px}
+.note{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 16px;margin:20px 0}
+.note p:last-child{margin-bottom:0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+:not(pre)>code{white-space:nowrap}
+code.addr{display:block;width:fit-content;max-width:100%;margin:6px 0 14px;padding:6px 9px;font-size:clamp(12px,3.4vw,14.5px);white-space:normal;overflow-wrap:anywhere}
+footer{margin-top:48px;padding-top:20px;padding-bottom:40px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:8px}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" aria-hidden="true" focusable="false"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46C0FF" stop-opacity="1"/><stop offset="1" stop-color="#0B3F73" stop-opacity="1"/></linearGradient><radialGradient id="glow" cx="0.28" cy="0.08" r="0.8"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.3"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient><linearGradient id="tag_dear_fill" gradientUnits="userSpaceOnUse" x1="248.34" y1="279.42" x2="576.01" y2="461.05"><stop offset="0" stop-color="#FFA864" stop-opacity="1"/><stop offset="1" stop-color="#F0611A" stop-opacity="1"/></linearGradient><linearGradient id="tag_cheap_fill" gradientUnits="userSpaceOnUse" x1="740.58" y1="771.66" x2="558.95" y2="443.99"><stop offset="0" stop-color="#6AF4B2" stop-opacity="1"/><stop offset="1" stop-color="#12B562" stop-opacity="1"/></linearGradient><linearGradient id="body_fill" gradientUnits="userSpaceOnUse" x1="755.49" y1="264.51" x2="312.39" y2="707.61"><stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/><stop offset="1" stop-color="#E2EFFC" stop-opacity="1"/></linearGradient><filter id="lift" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#021226" flood-opacity="0.4"/></filter><clipPath id="corners"><rect width="1024" height="1024" rx="229.07"/></clipPath></defs><g clip-path="url(#corners)"><rect width="1024" height="1024" fill="url(#sky)"/><rect width="1024" height="1024" fill="url(#glow)"/><g filter="url(#lift)"><path d="M276.76,271.27 L362.03,246.82 A18.48,18.48 0 0 1 376.08,248.42 L603.01,374.22 A18.48,18.48 0 0 1 610.22,399.34 L541.8,522.76 A18.48,18.48 0 0 1 516.68,529.97 L289.75,404.18 A18.48,18.48 0 0 1 280.94,393.11 L256.49,307.84 A29.57,29.57 0 0 1 276.76,271.27 Z M291.32,313.96 A19.32,19.32 0 1 0 329.96,313.96 A19.32,19.32 0 1 0 291.32,313.96 Z" fill="url(#tag_dear_fill)" fill-rule="evenodd"/><path d="M712.16,763.51 L626.89,739.06 A18.48,18.48 0 0 1 615.82,730.25 L490.03,503.32 A18.48,18.48 0 0 1 497.24,478.2 L620.66,409.78 A18.48,18.48 0 0 1 645.78,416.99 L771.58,643.92 A18.48,18.48 0 0 1 773.18,657.97 L748.73,743.24 A29.57,29.57 0 0 1 712.16,763.51 Z M686.72,709.36 A19.32,19.32 0 1 0 725.36,709.36 A19.32,19.32 0 1 0 686.72,709.36 Z" fill="url(#tag_cheap_fill)" fill-rule="evenodd"/><path d="M602.25,344.1 A52.08,164.64 45 0 1 675.9,417.75 L465.44,628.21 A15.12,15.12 0 0 0 461.24,636.28 L441.33,749.1 A11.76,11.76 0 0 1 438.07,755.37 L426.71,766.73 A10.08,10.08 0 0 1 410.61,764.21 L375.85,696.47 A8.4,8.4 0 0 0 364.22,693.01 L327.46,713.94 A8.4,8.4 0 0 1 317.36,712.58 L307.42,702.64 A8.4,8.4 0 0 1 306.06,692.54 L326.99,655.78 A8.4,8.4 0 0 0 323.53,644.15 L255.79,609.39 A10.08,10.08 0 0 1 253.27,593.29 L264.63,581.93 A11.76,11.76 0 0 1 270.9,578.67 L383.72,558.76 A15.12,15.12 0 0 0 391.79,554.56 L602.25,344.1 Z" fill="url(#body_fill)" fill-rule="evenodd"/></g></g></svg>
+<a class="brand" href="https://skybuyfly.pitchai.net/">SkyBuyFly</a>
+</header>
+<main id="content">
+<p class="eyebrow">Privacy notice</p>
+<h1>Privacy notice for SkyBuyFly in AI assistants</h1>
+<p class="lead">This notice covers the SkyBuyFly MCP server, which AI assistants such as ChatGPT, Claude, Cursor, VS Code and Gemini CLI use to search SkyBuyFly's duty-free price comparison. It describes what the software does today. The server's address is:</p>
+<code class="addr">https://skybuyfly.pitchai.net/mcp</code>
+<p class="meta">Last updated 9 November 2026</p>
+
+<div class="note">
+<p>In short: the server needs no sign-in, sets no cookies, does no analytics, tracking or advertising, and does not sell data. It receives only what your assistant puts into a SkyBuyFly tool call, such as search text or a barcode. Web server logs with IP addresses are deleted after about 15 days.</p>
+</div>
+
+<h2>Who is responsible</h2>
+<p>PitchAI operates SkyBuyFly and this server and is responsible for the data described here. Contact us at <a href="mailto:info@pitchai.net">info@pitchai.net</a> or through the <a href="https://skybuyfly.pitchai.net/contact">contact form</a> (topic "Privacy question").</p>
+
+<h2>What your assistant sends us</h2>
+<p>Your assistant decides when to use a SkyBuyFly tool. A tool call contains only the tool's inputs: search text, product IDs, barcodes, airport codes, a text to filter the airport list by, a currency and, for a live check, how many seconds to wait. We do not receive your conversation, your name, your account with the AI service, or files you share with the assistant. Because search text is logged (see Logs), please do not put personal details into a product search.</p>
+
+<h2>How we use it</h2>
+<p>We use the inputs only to answer the tool call. The server looks up the answer in the SkyBuyFly API on the same server (<code>skybuyfly.pitchai.net/api</code>); the search text, product ID or barcode is part of that request's address. These requests carry a Do Not Track signal (<code>DNT: 1</code>), so the SkyBuyFly website records no analytics for them. Answers from the API are kept in the server's memory for up to 10 minutes so that repeated questions are answered faster. The tool results contain product information, prices and links to SkyBuyFly pages, and no information about you.</p>
+
+<h2>Live price checks</h2>
+<p>When your assistant asks for live prices, SkyBuyFly fetches the product page from each airport shop's website to confirm the current price. The shop sees a request from SkyBuyFly's server, not from you or your assistant.</p>
+
+<h2>No accounts, cookies or tracking</h2>
+<p>The server has no accounts and no sign-in. It sets no cookies, runs no analytics or tracking, shows no advertising, builds no profiles and does not sell or share data for marketing.</p>
+
+<h2>Logs</h2>
+<ul>
+<li><strong>Web server.</strong> Our web server logs each request to the MCP server with the requesting IP address, the time, the requested address (such as <code>/mcp</code>), the response status and size, the referring page, the client software (user agent) and how long the answer took. When a request is refused because an address sends too many, the web server's error log also notes that address. With ChatGPT, Claude on the web and similar services, the requesting address is normally the AI service's server, not your device. With a client that runs on your computer, such as Claude Code, VS Code, Cursor or Gemini CLI, the request comes from your computer, so the logged address is yours.</li>
+<li><strong>Requests to the SkyBuyFly API.</strong> The same web server logs the server's own requests to the SkyBuyFly API, with SkyBuyFly's own server address; their requested address contains the search text, product ID or barcode.</li>
+<li><strong>The MCP server.</strong> The server writes one line per tool call: the tool name, the outcome, the duration, the status codes of the SkyBuyFly API, the type of client (such as ChatGPT, Claude or Cursor, derived from the user agent) and, for a product search or an airport list filter, the first 200 characters of that text. If a call fails unexpectedly, it also writes the error and its technical trace. It does not write IP addresses.</li>
+<li><strong>Rate limits.</strong> To limit the number of calls per minute, the server counts calls per requesting address in its memory. These counters are not written to disk and are cleared over time and whenever the server restarts.</li>
+<li><strong>Totals.</strong> The server keeps running totals of calls per tool, outcome and client type. They contain no addresses and no search text.</li>
+</ul>
+<p>We use logs for security and troubleshooting. Web server logs are rotated each day that has entries and the 14 most recent rotations are kept, so their lines are normally deleted after about 15 days. The MCP server's own log is rotated by size (30 MB), which removes the oldest lines.</p>
+
+<h2>Who receives data</h2>
+<ul>
+<li><strong>Hetzner</strong> hosts our servers in Helsinki, Finland.</li>
+<li><strong>Airport shops</strong> receive requests from SkyBuyFly's server during live checks. These requests contain no personal data.</li>
+<li><strong>Your AI service</strong> (for example OpenAI for ChatGPT, Anthropic for Claude, Google for Gemini) processes your conversation and the tool results under its own privacy policy. SkyBuyFly has no access to your conversation.</li>
+</ul>
+
+<h2>Why we may process it</h2>
+<p>We process tool inputs to provide the answers your assistant asks for, and logs to run and secure the service (legitimate interest).</p>
+
+<h2>Your rights</h2>
+<p>You can ask for access to, correction or deletion of your data, a copy of it, or restriction of its use, and you can object to processing. Because the server has no accounts and logs contain no names, we can usually find log lines only if you tell us the time of your request and the IP address it came from. Contact <a href="mailto:info@pitchai.net">info@pitchai.net</a> or use the <a href="https://skybuyfly.pitchai.net/contact">contact form</a>. You can also complain to a data protection authority, such as the Dutch Autoriteit Persoonsgegevens.</p>
+
+<h2>More information</h2>
+<p>For the SkyBuyFly website and the iOS and Android apps, see the full <a href="https://skybuyfly.pitchai.net/privacy/policy">SkyBuyFly privacy policy</a>. How the assistant integration works is described on <a href="https://skybuyfly.pitchai.net/mcp/docs">SkyBuyFly for AI assistants</a>. We will update this notice when the software changes, and change the date above.</p>
+</main>
+<footer>
+<nav aria-label="Related pages">
+<a href="https://skybuyfly.pitchai.net/mcp/docs">SkyBuyFly for AI assistants</a>
+<a href="https://skybuyfly.pitchai.net/privacy/policy">Privacy policy</a>
+<a href="https://skybuyfly.pitchai.net/mcp/terms">Terms of use</a>
+<a href="https://skybuyfly.pitchai.net/mcp/support">Support</a>
+</nav>
+<p>SkyBuyFly is published by PitchAI.</p>
+</footer>
+</body>
+</html>
