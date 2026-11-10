@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "analyzers": {
+    "basedpyright": [],
+    "nested-event-loops": [],
+    "no-dense-inline-comprehensions": [],
+    "no-pure-wrapper-functions": [],
+    "no-single-use-one-line-functions": [],
+    "no-vague-signatures": [],
+    "no-validation-bypasses": [],
+    "process-edges": [],
+    "pylint": [],
+    "ruff": [],
+    "semgrep": []
+  }
+}
